@@ -1,8 +1,20 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }],
-  "functions": {
-    "api/index.py": {
-      "includeFiles": "{kasir_app.py,requirements.txt,vercel.json,README.md,api/**,static/**,templates/**}"
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": ["app.py", "templates/**", "static/**"]
+      }
+    },
+    {
+      "src": "static/**",
+      "use": "@vercel/static"
     }
-  }
+  ],
+  "routes": [
+    { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "/(.*)", "dest": "/api/index.py" }
+  ]
 }
