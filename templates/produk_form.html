@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Tambah' if mode == 'tambah' else 'Edit' }} Produk{% endblock %}
+{% block content %}
+<div class="card form-card">
+  <h1>{{ 'Tambah Produk' if mode == 'tambah' else 'Edit Produk' }}</h1>
+  <form method="post" autocomplete="off">
+    <label class="label" for="name">Nama produk</label>
+    <input class="input" id="name" name="name" maxlength="80" required value="{{ product.name or '' }}">
+
+    <div class="two">
+      <div>
+        <label class="label" for="price">Harga (Rp)</label>
+        <input class="input" id="price" name="price" type="number" min="0" step="1" required value="{{ product.price if product.price is not none else '' }}">
+      </div>
+      <div>
+        <label class="label" for="stock">Stok</label>
+        <input class="input" id="stock" name="stock" type="number" min="0" step="1" required value="{{ product.stock if product.stock is not none else '' }}">
+      </div>
+    </div>
+
+    <div class="actions end">
+      <a class="btn btn-ghost" href="{{ url_for('produk') }}">Batal</a>
+      <button class="btn btn-pink">Simpan</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Produk{% endblock %}
+{% block content %}
+<div class="section-head">
+  <h1>Produk</h1>
+  <div class="actions">
+    <form method="get" class="inline">
+      <input type="search" name="q" value="{{ q }}" class="input" placeholder="Cari nama produk…">
+    </form>
+    <a class="btn btn-pink" href="{{ url_for('produk_tambah') }}">+ Tambah</a>
+  </div>
+</div>
+
+<div class="card table-wrap">
+  <table>
+    <thead><tr><th>#</th><th>Nama</th><th class="num">Harga</th><th class="num">Stok</th><th class="num">Aksi</th></tr></thead>
+    <tbody>
+    {% for p in products %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td><strong>{{ p.name }}</strong></td>
+        <td class="num">{{ p.price|rupiah }}</td>
+        <td class="num"><span class="badge {{ 'badge-low' if p.stock <= 5 else 'badge-ok' }}">{{ p.stock }}</span></td>
+        <td class="num">
+          <a class="btn btn-matcha btn-sm" href="{{ url_for('produk_edit', pid=p.id) }}">Edit</a>
+          <form method="post" action="{{ url_for('produk_hapus', pid=p.id) }}" class="inline"
+                data-confirm="Hapus produk '{{ p.name }}'?">
+            <button class="btn btn-danger btn-sm">Hapus</button>
+          </form>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="empty">Belum ada produk.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Struk #{{ t.id }}{% endblock %}
+{% block content %}
+<div class="card receipt">
+  <h1>🧾 Struk #{{ t.id }}</h1>
+  <p class="muted">{{ t.created_at }} WIB</p>
+  <table>
+    <thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Harga</th><th class="num">Subtotal</th></tr></thead>
+    <tbody>
+    {% for i in items %}
+      <tr><td>{{ i.product_name }}</td><td class="num">{{ i.qty }}</td><td class="num">{{ i.price|rupiah }}</td><td class="num">{{ i.subtotal|rupiah }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <div class="row total"><span>Total</span><strong>{{ t.total|rupiah }}</strong></div>
+  <div class="row"><span>Bayar</span><span>{{ t.paid|rupiah }}</span></div>
+  <div class="row"><span>Kembalian</span><span>{{ t.change|rupiah }}</span></div>
+  <div class="actions end no-print">
+    <a class="btn btn-ghost" href="{{ url_for('kasir') }}">Transaksi baru</a>
+    <button class="btn btn-pink" onclick="window.print()">Cetak</button>
+  </div>
+</div>
+{% endblock %}
